@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  anonym_id: MyString
+  submission_key: MyString
+  grader_payload: MyText
+
+two:
+  anonym_id: MyString
+  submission_key: MyString
+  grader_payload: MyText

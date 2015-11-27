@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Grader Jobs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Anonym</th>
+      <th>Submission key</th>
+      <th>Grader payload</th>
+      <th colspan="4"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @grader_jobs.each do |grader_job| %>
+      <tr>
+        <td><%= grader_job.anonym_id %></td>
+        <td><%= grader_job.submission_key %></td>
+        <td><%= grader_job.grader_payload %></td>
+        <td><%= link_to 'Show', grader_job %></td>
+        <td><%= link_to 'Edit', edit_grader_job_path(grader_job) %></td>
+        <td><%= link_to 'Grade', grade_grader_job_path(grader_job) %></td>        
+        <td><%= link_to 'Destroy', grader_job, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Grader job', new_grader_job_path %>

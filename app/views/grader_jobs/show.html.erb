@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Anonym:</strong>
+  <%= @grader_job.anonym_id %>
+</p>
+
+<p>
+  <strong>Submission key:</strong>
+  <%= @grader_job.submission_key %>
+</p>
+
+<p>
+  <strong>Grader payload:</strong>
+  <%= @grader_job.grader_payload %>
+</p>
+
+<%= link_to 'Edit', edit_grader_job_path(@grader_job) %> |
+<%= link_to 'Back', grader_jobs_path %>

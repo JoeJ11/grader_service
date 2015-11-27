@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Cmd:</strong>
+  <%= @assignment.cmd %>
+</p>
+
+<p>
+  <strong>Exp:</strong>
+  <%= @assignment.exp_id %>
+</p>
+
+<p>
+  <strong>Queue Name:</strong>
+  <%= @assignment.queue_name %>
+</p>
+
+<%= link_to 'Edit', edit_assignment_path(@assignment) %> |
+<%= link_to 'Back', assignments_path %>
