@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151125140720) do
+ActiveRecord::Schema.define(version: 20151128141352) do
 
   create_table "assignments", force: :cascade do |t|
     t.string   "cmd"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20151125140720) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "queue_name"
+    t.string   "code_files"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -43,6 +44,8 @@ ActiveRecord::Schema.define(version: 20151125140720) do
     t.text     "grader_payload"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "grade"
+    t.text     "code_file"
   end
 
 end
