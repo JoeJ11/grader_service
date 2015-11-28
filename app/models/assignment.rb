@@ -13,10 +13,14 @@ class Assignment < ActiveRecord::Base
         :grader_payload => JSON.parse(content['xqueue_body'])['grader_payload']
       )
       job.save
-      job.grade
+      job.grading
     end
     self.next_job
   end
   handle_asynchronously :next_job, :run_at => Proc.new { 1.seconds.from_now }, :priority => 1
+
+  def get_code_file
+    self.code_files.split(';')
+  end
 
 end

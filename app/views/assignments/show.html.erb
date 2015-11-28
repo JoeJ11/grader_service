@@ -15,5 +15,10 @@
   <%= @assignment.queue_name %>
 </p>
 
+<p>
+  <strong>Code Files:</strong>
+  <%= @assignment.code_files %>
+</p>
+
 <%= link_to 'Edit', edit_assignment_path(@assignment) %> |
 <%= link_to 'Back', assignments_path %>
