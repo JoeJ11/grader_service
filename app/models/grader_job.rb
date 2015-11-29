@@ -3,7 +3,7 @@ class GraderJob < ActiveRecord::Base
 
   MAIN_SERVER_URL = 'http://218.247.230.201/dispatches/file?'
 
-  def grade
+  def grading
     @cookie = GraderJob.get_session
     payload = JSON.parse(self.grader_payload)
     exp = Assignment.find_by_exp_id payload['exp_id']
@@ -32,16 +32,16 @@ class GraderJob < ActiveRecord::Base
       end
       File.open(dir+'/response', 'r') do |f|
         response = f.read.split("\n")
-        puts response
       end
     end
     _return_result(response)
+    self.code_file = ''
     exp.get_code_file.each do |f_name|
       self.code_file += f_name + _get_file(self.anonym_id, payload['exp_id'], f_name) + "\n\n"
     end
     self.save
   end
-  handle_asynchronously :grade, :priority => 2
+  handle_asynchronously :grading, :priority => 2
 
   def _get_file(user_name, exp_id, file_path)
     response = HTTParty.get(

@@ -15,5 +15,15 @@
   <%= @grader_job.grader_payload %>
 </p>
 
+<p>
+  <strong>Code file:</strong>
+  <%= @grader_job.code_file %>
+</p>
+
+<p>
+  <strong>Grade</strong>
+  <%= @grader_job.grade %>
+</p>
+
 <%= link_to 'Edit', edit_grader_job_path(@grader_job) %> |
 <%= link_to 'Back', grader_jobs_path %>
