@@ -19,4 +19,8 @@ class Assignment < ActiveRecord::Base
   end
   handle_asynchronously :next_job, :run_at => Proc.new { 1.seconds.from_now }, :priority => 1
 
+  def get_code_file
+    self.code_file.split(';')
+  end
+
 end

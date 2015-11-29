@@ -4,7 +4,7 @@ class GraderJob < ActiveRecord::Base
   MAIN_SERVER_URL = 'http://218.247.230.201/dispatches/file?'
 
   def grade
-    @@cookie = GraderJob.get_session
+    @cookie = GraderJob.get_session
     payload = JSON.parse(self.grader_payload)
     exp = Assignment.find_by_exp_id payload['exp_id']
     file_content = _get_file(self.anonym_id, payload['exp_id'], payload['file_path'])
@@ -35,24 +35,11 @@ class GraderJob < ActiveRecord::Base
         puts response
       end
     end
-
-    if response
-      body = {
-          'correct' => response[0] == response[1],
-          'score' => response[0].to_i,
-      }
-      if response.size > 2
-        body['msg'] = response[2..-1].join("\n")
-      else
-        body['msg'] = '<p>No comment.</p>'
-      end
-      Rails.logger.info "RESPONSE::CORRECTNESS:#{body['correct']}"
-      Rails.logger.info "RESPONSE::SCORE:#{body['score']}"
-      Rails.logger.info "RESPONSE::MSG:#{body['msg']}"
-      return_result @@cookie, self.submission_key, body
-    else
-      _generate_error_response '<p>Response file not found.</p>'
+    _return_result(response)
+    exp.get_code_file.each do |f_name|
+      self.code_file += f_name + _get_file(self.anonym_id, payload['exp_id'], f_name) + "\n\n"
     end
+    self.save
   end
   handle_asynchronously :grade, :priority => 2
 
@@ -74,6 +61,30 @@ class GraderJob < ActiveRecord::Base
       'score' => 0,
       'msg' => "<p>Internal Error!</p>\n" + msg
     }
-    return_result @@cookie, self.submission_key, body
+    self.grade = -1
+    self.code_file = msg
+    self.save
+    return_result @cookie, self.submission_key, body
+  end
+
+  def _return_result(response)
+    if response
+      body = {
+          'correct' => response[0] == response[1],
+          'score' => response[0].to_i,
+      }
+      self.grade = response[0].to_i
+      if response.size > 2
+        body['msg'] = response[2..-1].join("\n")
+      else
+        body['msg'] = '<p>No comment.</p>'
+      end
+      Rails.logger.info "RESPONSE::CORRECTNESS:#{body['correct']}"
+      Rails.logger.info "RESPONSE::SCORE:#{body['score']}"
+      Rails.logger.info "RESPONSE::MSG:#{body['msg']}"
+      return_result @cookie, self.submission_key, body
+    else
+      _generate_error_response '<p>Response file not found.</p>'
+    end
   end
 end
