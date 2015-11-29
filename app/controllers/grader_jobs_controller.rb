@@ -63,7 +63,7 @@ class GraderJobsController < ApplicationController
 
   # GET /grader_jobs/1/grade
   def grade
-    @grader_job.grade
+    @grader_job.grading
     redirect_to :back
   end
 

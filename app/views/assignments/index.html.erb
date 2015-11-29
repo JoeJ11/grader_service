@@ -7,6 +7,7 @@
     <tr>
       <th>Exp</th>
       <th>Cmd</th>
+      <th>Code Files</th>
       <th colspan="4"></th>
     </tr>
   </thead>
@@ -16,6 +17,7 @@
       <tr>
         <td><%= assignment.exp_id %></td>
         <td><%= assignment.cmd %></td>
+        <td><%= assignment.code_files %></td>
         <td><%= link_to 'Show', assignment %></td>
         <td><%= link_to 'Start', start_assignment_path(assignment) %></td>
         <td><%= link_to 'Edit', edit_assignment_path(assignment) %></td>
