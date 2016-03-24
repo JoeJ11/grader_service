@@ -58,11 +58,11 @@ def grade(task):
 		time.sleep(1)
 	print 'Task {}'.format(task)
 	if 'success' in p.out.split('\n'):
-		return True, 'Test Case {}: Success!\n'.format(task)
+		return True, '<p>Test Case {}: Success!</p>\n'.format(task)
 	elif p.terminate:
-		return False, 'Test Case {} Error Message:\n{}'.format(task, p.err)
+		return False, '<p>Test Case {} Error Message:</p>\n{}'.format(task, p.err.replace('\n', '<br/>\n'))
 	else:
-		return False, 'Test Case {} Timeout\n'.format(task)
+		return False, '<p>Test Case {} Timeout</p>\n'.format(task)
 
 os.system('rm nachos.conf')
 os.system('cp nachos.conf1 nachos.conf')
