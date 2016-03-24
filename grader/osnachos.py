@@ -6,6 +6,7 @@ import sys
 import json
 import subprocess
 import time
+from distutils import dir_util
 
 import process
 
@@ -27,8 +28,9 @@ if not os.path.isdir(proj_name):
 else:
 	os.chdir(proj_name)
 	os.system('git pull')
-os.system('rm -r {}/nachos/threads'.format(GRADER_ROOT))
-os.system('cp -r threads/ {}/nachos/threads/'.format(GRADER_ROOT))
+# os.system('rm -r {}/nachos/threads'.format(GRADER_ROOT))
+# os.system('cp -r threads/ {}/nachos/threads/'.format(GRADER_ROOT))
+dir_util.copy_tree('threads', '{}/nachos/threads/'.format(GRADER_ROOT))
 os.chdir(os.path.join(GRADER_ROOT, 'proj1'))
 
 os.system('make clean')
