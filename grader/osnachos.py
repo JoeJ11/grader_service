@@ -5,12 +5,17 @@ import os
 import sys
 import json
 import subprocess
+import time
 
 import process
+
 RAILS_ROOT = '/home/ubuntu/grader_service/'
+if len(sys.argv) > 2:
+	RAILS_ROOT = sys.argv[2]
 GRADER_ROOT = os.path.join(RAILS_ROOT, 'nachos')
 
 tmp_dir_path = sys.argv[1]
+
 with open(os.path.join(tmp_dir_path, 'answer'), 'r') as f_in:
 	user_info = json.load(f_in)
 
@@ -43,16 +48,20 @@ tasks = {
 }
 
 def grade(task):
-	terminate, ext_code, out, err = process.exec_command(tasks[task])
+	p = process.Command(tasks[task])
+	p.start()
+	while not p.stop:
+		time.sleep(1)
 	print 'Task {}'.format(task)
-	if 'success' in out.split('\n'):
+	if 'success' in p.out.split('\n'):
 		return True, 'Test Case {}: Success!\n'.format(task)
-	elif terminate:
-		return False, 'Test Case {} Error Message:\n{}'.format(task, err)
+	elif p.terminate:
+		return False, 'Test Case {} Error Message:\n{}'.format(task, p.err)
 	else:
 		return False, 'Test Case {} Timeout\n'.format(task)
 
-process.exec_command('cp nachos.conf1 nachos.conf')
+os.system('rm nachos.conf')
+os.system('cp nachos.conf1 nachos.conf')
 correct, msg = grade(1)
 if correct:
 	score += 1
@@ -69,7 +78,9 @@ correct, msg = grade(4)
 if correct:
 	score += 1
 comment += msg
-process.exec_command('cp nachos.conf2 nachos.conf')
+
+os.system('rm nachos.conf')
+os.system('cp nachos.conf2 nachos.conf')
 correct, msg = grade(5)
 if correct:
 	score += 1
