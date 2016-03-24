@@ -6,7 +6,7 @@ import sys
 import json
 import subprocess
 import time
-from distutils import dir_util
+import shutil
 
 import process
 
@@ -30,7 +30,9 @@ else:
 	os.system('git pull')
 # os.system('rm -r {}/nachos/threads'.format(GRADER_ROOT))
 # os.system('cp -r threads/ {}/nachos/threads/'.format(GRADER_ROOT))
-dir_util.copy_tree('threads', '{}/nachos/threads/'.format(GRADER_ROOT))
+# dir_util.copy_tree('threads', '{}/nachos/threads/'.format(GRADER_ROOT))
+shutil.rmtree(os.path.join(RAILS_ROOT, 'nachos', 'threads'))
+shutil.copytree(os.path.join(RAILS_ROOT, 'osnachos', proj_name, 'threads'), os.path.join(RAILS_ROOT, 'nachos', 'threads'))
 os.chdir(os.path.join(GRADER_ROOT, 'proj1'))
 
 os.system('make clean')
