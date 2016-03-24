@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: ASCII -*-
+
 import os
 import sys
 import json
@@ -19,7 +22,7 @@ if not os.path.isdir(proj_name):
 else:
 	os.chdir(proj_name)
 	os.system('git pull')
-
+os.system('rm -r {}/nachos/threads'.format(GRADER_ROOT))
 os.system('cp -r threads/ {}/nachos/'.format(GRADER_ROOT))
 os.chdir(os.path.join(GRADER_ROOT, 'proj1'))
 
@@ -37,7 +40,6 @@ tasks = {
 	5:'../bin/nachos -- nachos.ag.ThreadGrader5 -# checkPriority=true,checkFifo=true,alterPriority=true',
 	6:'../bin/nachos -- nachos.ag.ThreadGrader6a -# lottery=false,depth=5,fanout=3,maxLocks=2,pJoin=50,release=5',
 	7:'../bin/nachos -- nachos.ag.ThreadGrader6b -# depth=10,pJoin=50',
-	8:'../bin/nachos  — nachos.ag.BoatGrader2 -# children=2,adults=1,priorities=3',
 }
 
 def grade(task):
@@ -80,13 +82,13 @@ correct, msg = grade(7)
 if correct:
 	score += 1
 comment += msg
-process.exec_command('cp nachos.conf1 nachos.conf')
-terminate, ext_code, out, err = process.exec_command(tasks[8])
-if terminate:
-	score += 1
-	comment += 'Test Case 8: Success!\n'
-else:
-	comment += 'Test Case 8: Timeout\n'
+# process.exec_command('cp nachos.conf1 nachos.conf')
+# terminate, ext_code, out, err = process.exec_command(tasks[8])
+# if terminate:
+# 	score += 1
+# 	comment += 'Test Case 8: Success!\n'
+# else:
+# 	comment += 'Test Case 8: Timeout\n'
 
 os.chdir(tmp_dir_path)
 print 'Grade {}/{}'.format(score, len(tasks))
