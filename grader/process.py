@@ -8,7 +8,7 @@ def exec_command(command):
 		counter += 1
 		time.sleep(1)
 	if proc.poll()==None:
-		proc.terminate()
+		proc.kill()
 		return (False, proc.poll(), '', '')
 	else:
 		(out, err) = proc.communicate()
