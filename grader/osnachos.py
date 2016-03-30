@@ -26,8 +26,9 @@ if not os.path.isdir(proj_name):
 	os.system('git clone http://root:passw0rd@10.2.1.88/{} {}'.format(user_info['git_location'], proj_name))
 	os.chdir(proj_name)
 else:
+	shutil.rmtree(os.path.join(RAILS_ROOT, 'osnachos', proj_name))
+	os.system('git clone http://root:passw0rd@10.2.1.88/{} {}'.format(user_info['git_location'], proj_name))
 	os.chdir(proj_name)
-	os.system('git pull')
 # os.system('rm -r {}/nachos/threads'.format(GRADER_ROOT))
 # os.system('cp -r threads/ {}/nachos/threads/'.format(GRADER_ROOT))
 # dir_util.copy_tree('threads', '{}/nachos/threads/'.format(GRADER_ROOT))
