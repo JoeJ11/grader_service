@@ -112,4 +112,4 @@ print 'Comment:\n{}'.format(comment)
 with open('response', 'w') as f_out:
 	f_out.write('{}\n'.format(score))
 	f_out.write('{}\n'.format(len(tasks)))
-	f_out.write(comment)
+	f_out.write('<div>'+comment+'</div>')
